@@ -1,4 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap");
+/* @import "~bootstrap-icons/font/bootstrap-icons.css"; */
+@import 'ngx-toastr/toastr';
 
 * {
   box-sizing: border-box;

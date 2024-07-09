@@ -1,3 +1,190 @@
-<pre>
-    {{teams$ | async | json }}
-</pre>
+<div class="groupInfo w-100 d-flex flex-column align-items-center">
+    <h1>Groups</h1>
+    <form class="form  w-100 d-flex flex-row justify-content-evenly" [formGroup]="newGroupFormGroup">
+        <div class="nameData d-flex flex-row align-items-center">
+            <label for="name">Group Name</label>
+            <input type="text" class="form-control" formControlName="name">
+        </div>
+        <button
+            class="btn btn-primary"
+            [disabled]="!newGroupFormGroup.valid"
+            (click)="sendNewGroup()"
+            type="send">
+            <i class="bi bi-plus-circle"></i>
+        </button>
+    </form>
+    <table class="table w-25">
+        <tbody>
+            @for (group of groups; track group.id) {
+                <tr>
+                    <td>{{group.id}}</td>
+                    <td>{{group.name}}</td>
+                    <td>
+                        <button class="btn btn-danger" (click)="removeGroup(group.name)">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<div class="editionsInfo w-100 d-flex flex-column justify-content-center">
+    <h1>EDITIONS</h1>
+    <table class="table w-50">
+        <thead>
+            <tr>
+                <th>id</th>
+                <th>Name</th>
+                <th>IsActive</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (edition of editions; track edition.id) {
+                <tr>
+                    <td>{{edition.id}}</td>
+                    <td>{{edition.name}}</td>
+                    <td>{{edition.isActive ? "Activa" : "Inactiva"}}</td>
+                    <td>
+                        <div class="form-check form-switch">
+                            <input type="checkbox" class="form-check-input"
+                                id="switch{{edition.id}}"
+                                [checked]="edition.isActive"
+                                (change)="alterEdition(edition.name)">
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<!-- <div class="playersInfo w-100 d-flex flex-column justify-content-center">
+    <h1>PLAYERS</h1>
+    <div class="searchButtons d-flex flex-row justify-content-center">
+        <div class="dropdown-container d-flex flex-row">
+            <select class="form-select" [(ngModel)]="selectedTeamCategory">
+                @for(category of categories; track category.id){
+                    <option [value]="category.name">{{category.name}}</option>
+                }
+            </select>
+            <button class="btn btn-primary" (click)="searchPlayerCategory()">Enviar</button>
+        </div>
+        <div class="dropdown-container d-flex flex-row">
+            <select class="form-select" [(ngModel)]="selectedTeamEdition">
+                @for(edition of editions; track edition.id){
+                    <option [value]="edition.name">{{edition.name}}</option>
+                }
+            </select>
+            <button class="btn btn-primary" (click)="searchPlayerEdition()">Enviar</button>
+        </div>
+    </div> 
+    <table class="table">
+        <tbody>
+            @for (player of players; track player.id) {
+                <tr>
+                    <td>{{player.name}}</td>
+                    <td>{{player.nif}}</td>
+                    <td>{{player.phone}}</td>
+                    <td>{{player.instagram}}</td>
+                    <td>{{player.wantPics ? "SI" : "NO"}}</td>
+                    <td>{{player.teamName}}</td>
+                    <td>{{player.editionName}}</td>
+                    <td>{{player.categoryName}}</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div> -->
+<div class="teamsInfo w-100 d-flex flex-column justify-content-center">
+    <h1>Teams</h1>
+    <div class="resume">
+        <p>TOTAL EQUIPOS: {{teams.length}}</p>
+    </div>
+    <form class="form w-100 d-flex flex-row justify-content-evenly" [formGroup]="newTeamFormGroup">
+        <div class="nameData d-flex flex-row align-items-center">
+            <label for="name">Team Name</label>
+            <input type="text" class="form-control" formControlName="name">
+        </div>
+        <div class="payData d-flex flex-row align-items-center">
+            <label for="pay">Has payed?</label>
+            <div class="form-check form-switch">
+                <input 
+                    type="checkbox"
+                    class="form-check-input"
+                    [checked]="false"
+                    formControlName="pay">
+            </div>
+        </div>
+        <div class="categoryData d-flex flex-row align-items-center">
+            <label for="category">Category</label>
+            <div class="dropdown-container">
+                <select class="form-select" formControlName="categoryName">
+                    @for(category of categories; track category.id){
+                        <option [value]="category.name">{{category.name}}</option>
+                    }
+                </select>
+            </div>
+        </div>
+        <div class="editionData d-flex flex-row align-items-center">
+            <label for="edition">Edition</label>
+            <div class="dropdown-container d-flex flex-row">
+                <select class="form-select" formControlName="editionName">
+                    @for(edition of editions; track edition.id){
+                        <option [value]="edition.name">{{edition.name}}</option>
+                    }
+                </select>
+            </div>
+        </div>
+        <button 
+            class="btn btn-primary" 
+            [disabled]="!newTeamFormGroup.valid" 
+            (click)="sendNewTeam()" 
+            type="send">
+            <i class="bi bi-plus-circle"></i>
+        </button>
+    </form>
+    <div class="filters  w-100 d-flex flex-row justify-content-evenly">
+        <select class="form-select" [(ngModel)] = "selectedGroupTeamFilter" >
+            @for(group of groups; track group.id){
+                <option [value]="group.name">{{group.name}}</option>
+            }
+        </select>
+        <button class="btn btn-primary" (click)="searchTeamGroup()">
+            <i class="bi bi-search"></i>
+        </button>
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Pagado</th>
+                <th>Categoría</th>
+                <th>Edición</th>
+                <th>Grupo</th>
+                <th>Borrar</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (team of teams; track team.id) {
+                <tr>
+                    <td>{{team.name}}</td>
+                    <td>{{team.pay ? 'Pagado' : 'NO PAGADO'}}</td>
+                    <td>{{team.categoryName}}</td>
+                    <td>{{team.editionName}}</td>
+                    <td>
+                        <select class="form-select" (change)="alterTeamGroup(team.name, team.editionName, $event)">
+                            @for(group of groups; track group.id){
+                                <option [value]="team.name">{{group.name}}</option>
+                            }
+                        </select>
+                    </td>
+                    <td>
+                        <button class="btn btn-danger" (click)="removeTeam(team.name, team.editionName)">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
