@@ -1,7 +1,7 @@
 <div class="competitionInfo d-flex flex-row flex-wrap">
     @for (group of groupsClassification; track group.groupName) {
-            <div class="groupInfo d-flex flex-column m-3">
-            <h2>{{group.groupName}}</h2>
+        <div class="groupInfo d-flex flex-column m-3">
+            <h2>{{ group.groupName }}</h2>
             <table class="table">
                 <thead>
                     <tr>
@@ -15,15 +15,40 @@
                 <tbody>
                     @for (team of group.groupTeams; track team.id) {
                         <tr>
-                            <td>{{team.name}}</td>
-                            <td>{{team.wins}}</td>
-                            <td>{{team.defeats}}</td>
-                            <td>{{team.points_diff}}</td>
-                            <td>{{team.classification_points}}</td>
+                            <td>{{ team.name }}</td>
+                            <td>{{ team.wins }}</td>
+                            <td>{{ team.defeats }}</td>
+                            <td>{{ team.points_diff }}</td>
+                            <td>{{ team.classification_points }}</td>
                         </tr>
                     }
                 </tbody>
             </table>
         </div>
-        }
+    }
+</div>
+<div class="gamesInfo d-flex">
+    <div class="courtGames">
+        <h2>Pista 1</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Equipo 1</th>
+                    <th>Equipo 2</th>
+                    <th>Puntos Equipo 1</th>
+                    <th>Puntos Equipo 2</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (game of court1GamesList; track game.id) {
+                    <tr>
+                        <td>{{game.team1.name}}</td>
+                        <td>{{game.team2.name}}</td>
+                        <td>{{game.team1Score}}</td>
+                        <td>{{game.team2Score}}</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 </div>

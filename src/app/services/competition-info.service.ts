@@ -13,4 +13,8 @@ export class CompetitionInfoService {
   getAllGroupsClassification(): Observable<any>{
     return this._http.get('http://localhost:44373/api/Teams/classifications/27082022');
   }
+
+  getAllGamesByCourt(courtNumber: number): Observable<any>{
+    return this._http.get(`http://localhost:44373/api/Games/court/${courtNumber}`);
+  }
 }
