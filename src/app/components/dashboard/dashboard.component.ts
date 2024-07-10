@@ -23,7 +23,7 @@ import { AlterTeamGroupRequest } from '../../core/models/AlterTeamGroupRequest';
 })
 export class DashboardComponent {
   private readonly _dashboard = inject(DashboardService);
-  private readonly _toastr = inject(ToastrService)
+  private readonly _toastr = inject(ToastrService);
 
   public selectedTeamCategory: string = '';
   public selectedTeamEdition: string = '';

@@ -6,8 +6,8 @@ export interface TeamResponseModel {
     pay: boolean,
     wins: number,
     defeats: number,
-    classificationPoints: number,
-    pointsDiff: number,
+    classification_points: number,
+    points_diff: number,
     editionName: string,
     categoryName: string,
     teamPlayers: PlayerResponseModel[]
