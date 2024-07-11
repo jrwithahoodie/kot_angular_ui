@@ -1,11 +1,12 @@
 <div class="info d-flex flex-row flex-wrap">
     <div class="competitionInfo w-50 d-flex flex-row flex-wrap">
         @for (group of groupsClassification; track group.groupName) {
-            <div class="groupInfo d-flex flex-column m-3">
+            <div class="groupInfo w-100 d-flex flex-column m-3">
                 <h2>{{ group.groupName }}</h2>
                 <table class="table">
                     <thead>
                         <tr>
+                            <th>Puesto</th>
                             <th>Nombre del equipo</th>
                             <th>Victorias</th>
                             <th>Derrotas</th>
@@ -14,8 +15,9 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @for (team of group.groupTeams; track team.id) {
-                            <tr>
+                        @for (team of group.groupTeams; let i = $index; track team.id) {
+                            <tr [ngClass]="{'bg-green-light': i % 2 === 0, 'bg-orange-light': i % 2 !== 0}">
+                                <td>{{ i + 1 }}</td>
                                 <td>{{ team.name }}</td>
                                 <td>{{ team.wins }}</td>
                                 <td>{{ team.defeats }}</td>
@@ -36,6 +38,7 @@
                     <tr>
                         <th>Equipo 1</th>
                         <th>Equipo 2</th>
+                        <th>Hora</th>
                         <th>Puntos Equipo 1</th>
                         <th>Puntos Equipo 2</th>
                     </tr>
@@ -45,6 +48,7 @@
                         <tr>
                             <td>{{game.team1.name}}</td>
                             <td>{{game.team2.name}}</td>
+                            <td>{{game.schedule | date:'shortTime'}}</td>
                             <td>{{game.team1Score}}</td>
                             <td>{{game.team2Score}}</td>
                         </tr>
@@ -59,6 +63,7 @@
                     <tr>
                         <th>Equipo 1</th>
                         <th>Equipo 2</th>
+                        <th>Hora</th>
                         <th>Puntos Equipo 1</th>
                         <th>Puntos Equipo 2</th>
                     </tr>
@@ -68,6 +73,7 @@
                         <tr>
                             <td>{{game.team1.name}}</td>
                             <td>{{game.team2.name}}</td>
+                            <td>{{game.schedule | date:'shortTime'}}</td>
                             <td>{{game.team1Score}}</td>
                             <td>{{game.team2Score}}</td>
                         </tr>
@@ -82,6 +88,7 @@
                     <tr>
                         <th>Equipo 1</th>
                         <th>Equipo 2</th>
+                        <th>Hora</th>
                         <th>Puntos Equipo 1</th>
                         <th>Puntos Equipo 2</th>
                     </tr>
@@ -91,6 +98,7 @@
                         <tr>
                             <td>{{game.team1.name}}</td>
                             <td>{{game.team2.name}}</td>
+                            <td>{{game.schedule | date:'shortTime'}}</td>
                             <td>{{game.team1Score}}</td>
                             <td>{{game.team2Score}}</td>
                         </tr>
@@ -105,6 +113,7 @@
                     <tr>
                         <th>Equipo 1</th>
                         <th>Equipo 2</th>
+                        <th>Hora</th>
                         <th>Puntos Equipo 1</th>
                         <th>Puntos Equipo 2</th>
                     </tr>
@@ -114,6 +123,7 @@
                         <tr>
                             <td>{{game.team1.name}}</td>
                             <td>{{game.team2.name}}</td>
+                            <td>{{game.schedule | date:'shortTime'}}</td>
                             <td>{{game.team1Score}}</td>
                             <td>{{game.team2Score}}</td>
                         </tr>

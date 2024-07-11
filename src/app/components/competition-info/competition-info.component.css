@@ -1,3 +1,7 @@
-/* .competitionInfo {
-    background-color: violet;
-} */
+.bg-green-light {
+    background-color: green; /* Verde claro */
+}
+
+.bg-orange-light {
+    background-color: red; /* Naranja claro */
+}

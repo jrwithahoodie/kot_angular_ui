@@ -1,3 +1,4 @@
+import { Time } from "@angular/common";
 import { TeamResponseModel } from "./TeamResponse";
 
 export interface GamesResponse {
@@ -6,5 +7,6 @@ export interface GamesResponse {
     team1Score: number,
     team2: TeamResponseModel,
     team2Score: number,
-    court: number
+    court: number,
+    schedule: string
 }
