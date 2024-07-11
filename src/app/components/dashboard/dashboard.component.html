@@ -174,7 +174,7 @@
                     <td>
                         <select class="form-select" (change)="alterTeamGroup(team.name, team.editionName, $event)">
                             @for(group of groups; track group.id){
-                                <option [value]="team.name">{{group.name}}</option>
+                                <option [value]="group.name">{{group.name}}</option>
                             }
                         </select>
                     </td>

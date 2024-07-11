@@ -1,54 +1,125 @@
-<div class="competitionInfo d-flex flex-row flex-wrap">
-    @for (group of groupsClassification; track group.groupName) {
-        <div class="groupInfo d-flex flex-column m-3">
-            <h2>{{ group.groupName }}</h2>
+<div class="info d-flex flex-row flex-wrap">
+    <div class="competitionInfo w-50 d-flex flex-row flex-wrap">
+        @for (group of groupsClassification; track group.groupName) {
+            <div class="groupInfo d-flex flex-column m-3">
+                <h2>{{ group.groupName }}</h2>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Nombre del equipo</th>
+                            <th>Victorias</th>
+                            <th>Derrotas</th>
+                            <th>+/-</th>
+                            <th>Puntos</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (team of group.groupTeams; track team.id) {
+                            <tr>
+                                <td>{{ team.name }}</td>
+                                <td>{{ team.wins }}</td>
+                                <td>{{ team.defeats }}</td>
+                                <td>{{ team.points_diff }}</td>
+                                <td>{{ team.classification_points }}</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+    </div>
+    <div class="gamesInfo w-50 d-flex flex-row flex-wrap">
+        <div class="courtGames w-100">
+            <h2>Pista 1</h2>
             <table class="table">
                 <thead>
                     <tr>
-                        <th>Nombre del equipo</th>
-                        <th>Victorias</th>
-                        <th>Derrotas</th>
-                        <th>+/-</th>
-                        <th>Puntos</th>
+                        <th>Equipo 1</th>
+                        <th>Equipo 2</th>
+                        <th>Puntos Equipo 1</th>
+                        <th>Puntos Equipo 2</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @for (team of group.groupTeams; track team.id) {
+                    @for (game of court1GamesList; track game.id) {
                         <tr>
-                            <td>{{ team.name }}</td>
-                            <td>{{ team.wins }}</td>
-                            <td>{{ team.defeats }}</td>
-                            <td>{{ team.points_diff }}</td>
-                            <td>{{ team.classification_points }}</td>
+                            <td>{{game.team1.name}}</td>
+                            <td>{{game.team2.name}}</td>
+                            <td>{{game.team1Score}}</td>
+                            <td>{{game.team2Score}}</td>
                         </tr>
                     }
                 </tbody>
             </table>
         </div>
-    }
-</div>
-<div class="gamesInfo d-flex">
-    <div class="courtGames">
-        <h2>Pista 1</h2>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Equipo 1</th>
-                    <th>Equipo 2</th>
-                    <th>Puntos Equipo 1</th>
-                    <th>Puntos Equipo 2</th>
-                </tr>
-            </thead>
-            <tbody>
-                @for (game of court1GamesList; track game.id) {
+        <div class="courtGames w-100">
+            <h2>Pista 2</h2>
+            <table class="table">
+                <thead>
                     <tr>
-                        <td>{{game.team1.name}}</td>
-                        <td>{{game.team2.name}}</td>
-                        <td>{{game.team1Score}}</td>
-                        <td>{{game.team2Score}}</td>
+                        <th>Equipo 1</th>
+                        <th>Equipo 2</th>
+                        <th>Puntos Equipo 1</th>
+                        <th>Puntos Equipo 2</th>
                     </tr>
-                }
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    @for (game of court2GamesList; track game.id) {
+                        <tr>
+                            <td>{{game.team1.name}}</td>
+                            <td>{{game.team2.name}}</td>
+                            <td>{{game.team1Score}}</td>
+                            <td>{{game.team2Score}}</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="courtGames w-100">
+            <h2>Pista 3</h2>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Equipo 1</th>
+                        <th>Equipo 2</th>
+                        <th>Puntos Equipo 1</th>
+                        <th>Puntos Equipo 2</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (game of court3GamesList; track game.id) {
+                        <tr>
+                            <td>{{game.team1.name}}</td>
+                            <td>{{game.team2.name}}</td>
+                            <td>{{game.team1Score}}</td>
+                            <td>{{game.team2Score}}</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="courtGames w-100">
+            <h2>Pista 4</h2>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Equipo 1</th>
+                        <th>Equipo 2</th>
+                        <th>Puntos Equipo 1</th>
+                        <th>Puntos Equipo 2</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (game of court4GamesList; track game.id) {
+                        <tr>
+                            <td>{{game.team1.name}}</td>
+                            <td>{{game.team2.name}}</td>
+                            <td>{{game.team1Score}}</td>
+                            <td>{{game.team2Score}}</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>

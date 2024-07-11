@@ -48,15 +48,19 @@ export class CompetitionInfoComponent implements OnInit{
         switch (court){
           case 1:
             this.court1GamesList = data
+            console.log(this.court1GamesList)
             break;
           case 2:
             this.court2GamesList = data
+            console.log(this.court2GamesList)
             break;
           case 3:
             this.court3GamesList = data
+            console.log(this.court3GamesList)
             break;
           case 4:
             this.court4GamesList = data
+            console.log(this.court4GamesList)
             break;
         }
         this._toastr.success('Se han traído los datos de partidos correctamente', 'Bien!');
