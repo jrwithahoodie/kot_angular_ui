@@ -27,6 +27,10 @@ export class DashboardService {
     return this._http.get('http://localhost:44373/api/Players');
   }
 
+  getAllGames(): Observable<any>{
+    return this._http.get('http://localhost:44373/api/Games');
+  }
+
   getAllGroups():Observable<any>{
     return this._http.get('http://localhost:44373/api/Groups');
   }
@@ -55,9 +59,12 @@ export class DashboardService {
     return this._http.get(`http://localhost:44373/api/Teams/group/${groupName}`);
   }
 
-
   newGroup(groupData: any): Observable<any>{
     return this._http.post('http://localhost:44373/api/Groups', groupData);
+  }
+
+  newGame(gameData: any): Observable<any>{
+    return this._http.post('http://localhost:44373/api/Games', gameData);
   }
 
   removeTeam(teamName: string, editionName: string): Observable<any>{

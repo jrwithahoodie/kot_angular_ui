@@ -9,6 +9,7 @@ import { ToastrService } from 'ngx-toastr';
 import { TeamResponseModel } from '../../core/models/TeamResponse';
 import { GroupsResponseModel } from '../../core/models/GroupsResponse';
 import { AlterTeamGroupRequest } from '../../core/models/AlterTeamGroupRequest';
+import { GamesResponse } from '../../core/models/GamesResponse';
 
 @Component({
   selector: 'app-dashboard',
@@ -33,6 +34,7 @@ export class DashboardComponent {
   public players: PlayerResponseModel[] = [];
   public teams: TeamResponseModel[] = [];
   public groups: GroupsResponseModel[] = [];
+  public games: GamesResponse[] = [];
 
   public newTeamFormGroup = new FormGroup({
     name: new FormControl('', {validators: Validators.required}),
@@ -45,6 +47,13 @@ export class DashboardComponent {
     name: new FormControl('', {validators: Validators.required})
   });
 
+  public newGameFormGroup = new FormGroup({
+    team1Name: new FormControl('', {validators: Validators.required}),
+    team2Name: new FormControl('', {validators: Validators.required}),
+    court: new FormControl(1, {validators: Validators.required}),
+    schedule: new FormControl('', {validators: Validators.required})
+  })
+
   constructor(){}
 
   ngOnInit(){
@@ -53,6 +62,7 @@ export class DashboardComponent {
     this.getPlayers();
     this.getTeams();
     this.getGroups();
+    this.getGames();
   };
 
   private getCategories(){
@@ -110,6 +120,17 @@ export class DashboardComponent {
     );
   }
 
+  private getGames() {
+    this._dashboard.getAllGames().subscribe(
+      (data:any) => {
+        this.games = data;
+      },
+      (error:any) => {
+        this._toastr.error(error, 'Algo no ha ido correctamente.');
+      }
+    );
+  }
+
   public sendNewGroup() {
     this._dashboard.newGroup(this.newGroupFormGroup.value).subscribe(
       (data:any) => {
@@ -118,6 +139,18 @@ export class DashboardComponent {
       },
       (error:any) => {
         this._toastr.error(error, 'Algo no ha ido correctamente.');
+      }
+    )
+  }
+
+  public sendNewGame(){
+    this.newGameFormGroup.value.schedule = "2024-07-27T" + this.newGameFormGroup.value.schedule + ":00.000Z";
+    this._dashboard.newGame(this.newGameFormGroup.value).subscribe(
+      (data:any) => {
+        this._toastr.success('Partido añadido con éxito', 'Bien!')
+      },
+      (error: any) => {
+        this._toastr.error(error, 'Algo no ha ido cocrrectamente')
       }
     )
   }

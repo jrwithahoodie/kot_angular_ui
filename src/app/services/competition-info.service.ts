@@ -11,7 +11,7 @@ export class CompetitionInfoService {
   constructor() { }
 
   getAllGroupsClassification(): Observable<any>{
-    return this._http.get('http://localhost:44373/api/Teams/classifications/27082022');
+    return this._http.get('http://localhost:44373/api/Teams/classifications/27072024');
   }
 
   getAllGamesByCourt(courtNumber: number): Observable<any>{

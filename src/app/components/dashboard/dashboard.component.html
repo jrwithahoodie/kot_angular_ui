@@ -29,6 +29,74 @@
         </tbody>
     </table>
 </div>
+<div class="gamesInfo w-100 d-flex flex-column align-items-center">
+    <h1>Games</h1>
+    <form class="form w-100 d-flex flex-row justify-content-evenly" [formGroup]="newGameFormGroup">
+        <div class="team1Name d-flex flex-row align-items-center">
+            <label for="team1Name">Equipo 1</label>
+            <div class="dropdown-container">
+                <select class="form-select" formControlName="team1Name">
+                    @for(team of teams; track team.id){
+                        <option [value]="team.name">{{team.name}}</option>
+                    }
+                </select>
+            </div>
+        </div>
+        <div class="team2Name d-flex flex-row align-items-center">
+            <label for="team2Name">Equipo 2</label>
+            <div class="dropdown-container">
+                <select class="form-select" formControlName="team2Name">
+                    @for(team of teams; track team.id){
+                        <option [value]="team.name">{{team.name}}</option>
+                    }
+                </select>
+            </div>
+        </div>
+        <div class="court d-flex flex-row align-items-center">
+            <label for="court">Pista</label>
+            <div class="dropdown-container">
+                <select class="form-select" formControlName="court">
+                    <option [value]="1">1</option>
+                    <option [value]="2">2</option>
+                    <option [value]="3">3</option>
+                    <option [value]="4">4</option>
+                </select>
+            </div>
+        </div>
+        <div class="schedule d-flex flex-column">
+            <label for="schedule" class="form-label">Fecha y Hora:</label>
+            <div class="input-group date" id="datetimepicker">
+                <input type="text" class="form-control" formControlName="schedule"/>
+                <span class="input-group-text"><i class="bi bi-calendar-plus-fill"></i></span>
+            </div>
+        </div>
+        <button 
+            class="btn btn-primary" 
+            [disabled]="!newGameFormGroup.valid" 
+            (click)="sendNewGame()" 
+            type="send">
+            <i class="bi bi-plus-circle"></i>
+        </button>
+    </form>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Equipo 1</th>
+                <th>Equipo 2</th>
+                <th>Pista</th>
+                <th>Hora</th>
+                <th>Puntos Equipo 1</th>
+                <th>Puntos Equipo 2</th>
+                <th>Borrar</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (game of games; track game.id) {
+                
+            }
+        </tbody>
+    </table>
+</div>
 <div class="editionsInfo w-100 d-flex flex-column justify-content-center">
     <h1>EDITIONS</h1>
     <table class="table w-50">
