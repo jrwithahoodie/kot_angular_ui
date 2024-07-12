@@ -10,6 +10,7 @@ import { TeamResponseModel } from '../../core/models/TeamResponse';
 import { GroupsResponseModel } from '../../core/models/GroupsResponse';
 import { AlterTeamGroupRequest } from '../../core/models/AlterTeamGroupRequest';
 import { GamesResponse } from '../../core/models/GamesResponse';
+import { AlterGameResult } from '../../core/models/AlterGameResult';
 
 @Component({
   selector: 'app-dashboard',
@@ -35,6 +36,13 @@ export class DashboardComponent {
   public teams: TeamResponseModel[] = [];
   public groups: GroupsResponseModel[] = [];
   public games: GamesResponse[] = [];
+
+  public alterGameObj: AlterGameResult = {
+    team1Name: '',
+    team2Name: '',
+    team1Score: 0,
+    team2Score: 0
+  }
 
   public newTeamFormGroup = new FormGroup({
     name: new FormControl('', {validators: Validators.required}),
@@ -147,6 +155,7 @@ export class DashboardComponent {
     this.newGameFormGroup.value.schedule = "2024-07-27T" + this.newGameFormGroup.value.schedule + ":00.000Z";
     this._dashboard.newGame(this.newGameFormGroup.value).subscribe(
       (data:any) => {
+        this.getGames();
         this._toastr.success('Partido añadido con éxito', 'Bien!')
       },
       (error: any) => {
@@ -161,6 +170,23 @@ export class DashboardComponent {
         this.getEditions();
       },
       (error: any) => {
+        this._toastr.error(error, 'Algo no ha ido correctamente.');
+      }
+    );
+  }
+
+  public updateGameScore(game: GamesResponse){
+    this.alterGameObj.team1Name = game.team1.name;
+    this.alterGameObj.team2Name = game.team2.name;
+    this.alterGameObj.team1Score = game.team1Score;
+    this.alterGameObj.team2Score = game.team2Score;
+
+    this._dashboard.alterGameResult(this.alterGameObj).subscribe(
+      (data:any) => {
+        this.getGames();
+        this._toastr.success('Se ha actualizado correctamente el resultado del partido!', 'Bien!');
+      },
+      (error:any) => {
         this._toastr.error(error, 'Algo no ha ido correctamente.');
       }
     );

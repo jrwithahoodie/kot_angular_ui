@@ -1,33 +1,64 @@
-<div class="groupInfo w-100 d-flex flex-column align-items-center">
-    <h1>Groups</h1>
-    <form class="form  w-100 d-flex flex-row justify-content-evenly" [formGroup]="newGroupFormGroup">
-        <div class="nameData d-flex flex-row align-items-center">
-            <label for="name">Group Name</label>
-            <input type="text" class="form-control" formControlName="name">
-        </div>
-        <button
-            class="btn btn-primary"
-            [disabled]="!newGroupFormGroup.valid"
-            (click)="sendNewGroup()"
-            type="send">
-            <i class="bi bi-plus-circle"></i>
-        </button>
-    </form>
-    <table class="table w-25">
-        <tbody>
-            @for (group of groups; track group.id) {
+<div class="generalInfo w-100 d-flex flex-row">
+    <div class="groupInfo w-100 d-flex flex-column align-items-center">
+        <h1>Groups</h1>
+        <form class="form  w-100 d-flex flex-row justify-content-evenly" [formGroup]="newGroupFormGroup">
+            <div class="nameData d-flex flex-row align-items-center">
+                <label for="name">Group Name</label>
+                <input type="text" class="form-control" formControlName="name">
+            </div>
+            <button
+                class="btn btn-primary"
+                [disabled]="!newGroupFormGroup.valid"
+                (click)="sendNewGroup()"
+                type="send">
+                <i class="bi bi-plus-circle"></i>
+            </button>
+        </form>
+        <table class="table w-25">
+            <tbody>
+                @for (group of groups; track group.id) {
+                    <tr>
+                        <td>{{group.id}}</td>
+                        <td>{{group.name}}</td>
+                        <td>
+                            <button class="btn btn-danger" (click)="removeGroup(group.name)">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="editionsInfo w-100 d-flex flex-column justify-content-center">
+        <h1>EDITIONS</h1>
+        <table class="table w-50">
+            <thead>
                 <tr>
-                    <td>{{group.id}}</td>
-                    <td>{{group.name}}</td>
-                    <td>
-                        <button class="btn btn-danger" (click)="removeGroup(group.name)">
-                            <i class="bi bi-trash"></i>
-                        </button>
-                    </td>
+                    <th>id</th>
+                    <th>Name</th>
+                    <th>IsActive</th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @for (edition of editions; track edition.id) {
+                    <tr>
+                        <td>{{edition.id}}</td>
+                        <td>{{edition.name}}</td>
+                        <td>{{edition.isActive ? "Activa" : "Inactiva"}}</td>
+                        <td>
+                            <div class="form-check form-switch">
+                                <input type="checkbox" class="form-check-input"
+                                    id="switch{{edition.id}}"
+                                    [checked]="edition.isActive"
+                                    (change)="alterEdition(edition.name)">
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 </div>
 <div class="gamesInfo w-100 d-flex flex-column align-items-center">
     <h1>Games</h1>
@@ -87,39 +118,24 @@
                 <th>Hora</th>
                 <th>Puntos Equipo 1</th>
                 <th>Puntos Equipo 2</th>
-                <th>Borrar</th>
+                <th>Editar</th>
             </tr>
         </thead>
         <tbody>
             @for (game of games; track game.id) {
-                
-            }
-        </tbody>
-    </table>
-</div>
-<div class="editionsInfo w-100 d-flex flex-column justify-content-center">
-    <h1>EDITIONS</h1>
-    <table class="table w-50">
-        <thead>
-            <tr>
-                <th>id</th>
-                <th>Name</th>
-                <th>IsActive</th>
-            </tr>
-        </thead>
-        <tbody>
-            @for (edition of editions; track edition.id) {
                 <tr>
-                    <td>{{edition.id}}</td>
-                    <td>{{edition.name}}</td>
-                    <td>{{edition.isActive ? "Activa" : "Inactiva"}}</td>
+                    <td>{{game.team1.name}}</td>
+                    <td>{{game.team2.name}}</td>
+                    <td>{{game.court}}</td>
+                    <td>{{game.schedule | date:'shortTime'}}</td>
                     <td>
-                        <div class="form-check form-switch">
-                            <input type="checkbox" class="form-check-input"
-                                id="switch{{edition.id}}"
-                                [checked]="edition.isActive"
-                                (change)="alterEdition(edition.name)">
-                        </div>
+                        <input type="number" class="form-control" [(ngModel)] = "game.team1Score" value="{{game.team1Score}}" min="0" max="22">
+                    </td>
+                    <td>
+                        <input type="number" class="form-control" [(ngModel)] = "game.team2Score" value="{{game.team2Score}}" min="0" max="22">
+                    </td>
+                    <td>
+                        <button class="btn btn-success"(click)="updateGameScore(game)"><i class="bi bi-pencil-fill"></i></button>
                     </td>
                 </tr>
             }

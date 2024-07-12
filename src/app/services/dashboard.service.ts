@@ -52,7 +52,11 @@ export class DashboardService {
   }
 
   alterTeamGroup(alterTeamData: AlterTeamGroupRequest): Observable<any>{
-    return this._http.put('http://localhost:44373/api/Teams/altergroup', alterTeamData)
+    return this._http.put('http://localhost:44373/api/Teams/altergroup', alterTeamData);
+  }
+
+  alterGameResult(alterGameData: any): Observable<any>{
+    return this._http.put('http://localhost:44373/api/Games/result', alterGameData);
   }
 
   getTeamGroup(groupName: string): Observable<any>{

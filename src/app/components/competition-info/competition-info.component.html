@@ -16,8 +16,7 @@
                     </thead>
                     <tbody>
                         @for (team of group.groupTeams; let i = $index; track team.id) {
-                            <!-- <tr [ngClass]="{'bg-green-light': i % 2 === 0, 'bg-orange-light': i % 2 !== 0}"> -->
-                            <tr [ngClass]="{'bg-green-light': i}">
+                            <tr [ngClass]="{'bg-success': i+1 % 2 === 0, 'bg-warning': i % 2 !== 0}">
                                 <td>{{ i + 1 }}</td>
                                 <td>{{ team.name }}</td>
                                 <td>{{ team.wins }}</td>
@@ -31,7 +30,7 @@
             </div>
         }
     </div>
-    <div class="gamesInfo w-50 d-flex flex-row flex-wrap">
+    <div class="gamesInfo w-50 d-flex flex-column justify-content-start flex-wrap">
         <div class="courtGames w-100">
             <h2>Pista 1</h2>
             <table class="table">
