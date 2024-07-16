@@ -10,7 +10,4 @@ import { CommonModule } from '@angular/common';
   styleUrl: './home.component.css'
 })
 export class HomeComponent {
-  private readonly _dashboard = inject(DashboardService);
-
-  products$ = this._dashboard.getAllTeams();
 }
