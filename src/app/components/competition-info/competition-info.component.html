@@ -16,7 +16,7 @@
                     </thead>
                     <tbody>
                         @for (team of group.groupTeams; let i = $index; track team.id) {
-                            <tr [ngClass]="{'bg-success': i+1 % 2 === 0, 'bg-warning': i % 2 !== 0}">
+                            <tr>
                                 <td>{{ i + 1 }}</td>
                                 <td>{{ team.name }}</td>
                                 <td>{{ team.wins }}</td>
