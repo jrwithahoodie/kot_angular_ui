@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { NgxPaginationModule } from 'ngx-pagination';
 import { DashboardService } from '../../services/dashboard.service';
 import { CategoryResponseModel } from '../../core/models/CategoryResponse';
 import { EditiosResponseModel } from '../../core/models/EditionsResponse';
@@ -18,7 +19,8 @@ import { AlterGameResult } from '../../core/models/AlterGameResult';
   imports: [
     CommonModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgxPaginationModule
   ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css'
@@ -30,6 +32,8 @@ export class DashboardComponent {
   public selectedTeamCategory: string = '';
   public selectedTeamEdition: string = '';
   public selectedGroupTeamFilter: string = '';
+  public selectedTeamGameFilter: string = '';
+
   public categories: CategoryResponseModel[] = [];
   public editions: EditiosResponseModel[] = [];
   public players: PlayerResponseModel[] = [];
@@ -291,5 +295,26 @@ export class DashboardComponent {
         this._toastr.error(error, 'Algo no ha ido correctamente.');
       }
     )
+  }
+
+  public searchTeamGame(){
+    var teamName = encodeURIComponent(this.selectedTeamGameFilter);
+    this._dashboard.getGamesByTeam(teamName).subscribe(
+      (data:any) => {
+        this.games = data;
+        if(this.games.length == 0){
+          this._toastr.warning(`El equipo ${this.selectedTeamGameFilter} no tiene ningún partido asignado`, 'Ojo!');
+        } else {
+          this._toastr.success(`Se han recuperado los datos con éxito.`, 'Bien!');
+        }
+      },
+      (error:any) => {
+        this._toastr.error(error, 'Algo no ha ido correctamente.');
+      }
+    )
+  }
+
+  public cleanGamesFilter(){
+    this.getGames();
   }
 }

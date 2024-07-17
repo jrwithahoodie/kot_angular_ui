@@ -14,21 +14,23 @@
                 <i class="bi bi-plus-circle"></i>
             </button>
         </form>
-        <table class="table w-25">
-            <tbody>
-                @for (group of groups; track group.id) {
-                    <tr>
-                        <td>{{group.id}}</td>
-                        <td>{{group.name}}</td>
-                        <td>
-                            <button class="btn btn-danger" (click)="removeGroup(group.name)">
-                                <i class="bi bi-trash"></i>
-                            </button>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
+        <div style="max-height: 400px; overflow-y: auto;">
+            <table class="table w-25">
+                <tbody>
+                    @for (group of groups; track group.id) {
+                        <tr>
+                            <td>{{group.id}}</td>
+                            <td>{{group.name}}</td>
+                            <td>
+                                <button class="btn btn-danger" (click)="removeGroup(group.name)">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
     </div>
     <div class="editionsInfo w-100 d-flex flex-column justify-content-center">
         <h1>EDITIONS</h1>
@@ -109,38 +111,53 @@
             <i class="bi bi-plus-circle"></i>
         </button>
     </form>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Equipo 1</th>
-                <th>Equipo 2</th>
-                <th>Pista</th>
-                <th>Hora</th>
-                <th>Puntos Equipo 1</th>
-                <th>Puntos Equipo 2</th>
-                <th>Editar</th>
-            </tr>
-        </thead>
-        <tbody>
-            @for (game of games; track game.id) {
-                <tr>
-                    <td>{{game.team1.name}}</td>
-                    <td>{{game.team2.name}}</td>
-                    <td>{{game.court}}</td>
-                    <td>{{game.schedule | date:'shortTime'}}</td>
-                    <td>
-                        <input type="number" class="form-control" [(ngModel)] = "game.team1Score" value="{{game.team1Score}}" min="0" max="22">
-                    </td>
-                    <td>
-                        <input type="number" class="form-control" [(ngModel)] = "game.team2Score" value="{{game.team2Score}}" min="0" max="22">
-                    </td>
-                    <td>
-                        <button class="btn btn-success"(click)="updateGameScore(game)"><i class="bi bi-pencil-fill"></i></button>
-                    </td>
-                </tr>
+    <div class="filters w-10 d-flex flex-row justify-content-evenly">
+        <select class="form-select m-1" [(ngModel)] = "selectedTeamGameFilter" >
+            @for(team of teams; track team.id){
+                <option [value]="team.name">{{team.name}}</option>
             }
-        </tbody>
-    </table>
+        </select>
+        <button class="btn btn-primary m-1" (click)="searchTeamGame()">
+            <i class="bi bi-search"></i>
+        </button>
+        <button class="btn btn-danger m-1" (click)="cleanGamesFilter()">
+            <i class="bi bi-trash"></i>
+        </button>
+    </div>
+    <div style="max-height: 400px; overflow-y: auto;">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Equipo 1</th>
+                    <th>Equipo 2</th>
+                    <th>Pista</th>
+                    <th>Hora</th>
+                    <th>Puntos Equipo 1</th>
+                    <th>Puntos Equipo 2</th>
+                    <th>Editar</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (game of games; track game.id) {
+                    <tr>
+                        <td>{{game.team1.name}}</td>
+                        <td>{{game.team2.name}}</td>
+                        <td>{{game.court}}</td>
+                        <td>{{game.schedule | date:'shortTime'}}</td>
+                        <td>
+                            <input type="number" class="form-control" [(ngModel)] = "game.team1Score" value="{{game.team1Score}}" min="0" max="22">
+                        </td>
+                        <td>
+                            <input type="number" class="form-control" [(ngModel)] = "game.team2Score" value="{{game.team2Score}}" min="0" max="22">
+                        </td>
+                        <td>
+                            <button class="btn btn-success"(click)="updateGameScore(game)"><i class="bi bi-pencil-fill"></i></button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 </div>
 <!-- <div class="playersInfo w-100 d-flex flex-column justify-content-center">
     <h1>PLAYERS</h1>
@@ -227,7 +244,7 @@
             <i class="bi bi-plus-circle"></i>
         </button>
     </form>
-    <div class="filters  w-100 d-flex flex-row justify-content-evenly">
+    <div class="filters w-100 d-flex flex-row justify-content-evenly">
         <select class="form-select" [(ngModel)] = "selectedGroupTeamFilter" >
             @for(group of groups; track group.id){
                 <option [value]="group.name">{{group.name}}</option>
@@ -237,38 +254,40 @@
             <i class="bi bi-search"></i>
         </button>
     </div>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Nombre</th>
-                <th>Pagado</th>
-                <th>Categoría</th>
-                <th>Edición</th>
-                <th>Grupo</th>
-                <th>Borrar</th>
-            </tr>
-        </thead>
-        <tbody>
-            @for (team of teams; track team.id) {
+    <div class="table-responsive" style="max-height: 400px; overflow-y: auto;">
+        <table class="table">
+            <thead>
                 <tr>
-                    <td>{{team.name}}</td>
-                    <td>{{team.pay ? 'Pagado' : 'NO PAGADO'}}</td>
-                    <td>{{team.categoryName}}</td>
-                    <td>{{team.editionName}}</td>
-                    <td>
-                        <select class="form-select" (change)="alterTeamGroup(team.name, team.editionName, $event)">
-                            @for(group of groups; track group.id){
-                                <option [value]="group.name">{{group.name}}</option>
-                            }
-                        </select>
-                    </td>
-                    <td>
-                        <button class="btn btn-danger" (click)="removeTeam(team.name, team.editionName)">
-                            <i class="bi bi-trash"></i>
-                        </button>
-                    </td>
+                    <th>Nombre</th>
+                    <th>Pagado</th>
+                    <th>Categoría</th>
+                    <th>Edición</th>
+                    <th>Grupo</th>
+                    <th>Borrar</th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @for (team of teams; track team.id) {
+                    <tr>
+                        <td>{{team.name}}</td>
+                        <td>{{team.pay ? 'Pagado' : 'NO PAGADO'}}</td>
+                        <td>{{team.categoryName}}</td>
+                        <td>{{team.editionName}}</td>
+                        <td>
+                            <select class="form-select" (change)="alterTeamGroup(team.name, team.editionName, $event)">
+                                @for(group of groups; track group.id){
+                                    <option [value]="group.name">{{group.name}}</option>
+                                }
+                            </select>
+                        </td>
+                        <td>
+                            <button class="btn btn-danger" (click)="removeTeam(team.name, team.editionName)">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 </div>
