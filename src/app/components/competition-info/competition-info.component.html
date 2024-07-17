@@ -16,7 +16,7 @@
                     </thead>
                     <tbody>
                         @for (team of group.groupTeams; let i = $index; track team.id) {
-                            <tr>
+                            <tr [ngClass]="{'bg-green-light': i === 0, 'bg-orange-light': i == 1}">
                                 <td>{{ i + 1 }}</td>
                                 <td>{{ team.name }}</td>
                                 <td>{{ team.wins }}</td>

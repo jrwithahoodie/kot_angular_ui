@@ -1,9 +1,11 @@
 .bg-green-light {
-    background-color: green; /* Verde claro */
+    background-color: #9bdbaa;
+    color: black;
 }
 
 .bg-orange-light {
-    background-color: red; /* Naranja claro */
+    background-color: #fdce76;
+    color: black;
 }
 
 .info {
