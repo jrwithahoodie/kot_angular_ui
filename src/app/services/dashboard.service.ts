@@ -63,6 +63,10 @@ export class DashboardService {
     return this._http.put('http://localhost:44373/api/Games/result', alterGameData);
   }
 
+  alterGameInfo(alterGameInfoData: any): Observable<any>{
+    return this._http.put('http://localhost:44373/api/Games/info', alterGameInfoData);
+  }
+
   getTeamGroup(groupName: string): Observable<any>{
     return this._http.get(`http://localhost:44373/api/Teams/group/${groupName}`);
   }

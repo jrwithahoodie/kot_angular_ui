@@ -12,6 +12,7 @@ import { GroupsResponseModel } from '../../core/models/GroupsResponse';
 import { AlterTeamGroupRequest } from '../../core/models/AlterTeamGroupRequest';
 import { GamesResponse } from '../../core/models/GamesResponse';
 import { AlterGameResult } from '../../core/models/AlterGameResult';
+import { AlterGameInfo } from '../../core/models/AlterGameInfo';
 
 @Component({
   selector: 'app-dashboard',
@@ -46,6 +47,12 @@ export class DashboardComponent {
     team2Name: '',
     team1Score: 0,
     team2Score: 0
+  }
+
+  public alterGameInfoObj: AlterGameInfo = {
+    gameId: 0,
+    newSchedule: '',
+    newCourt: 0
   }
 
   public newTeamFormGroup = new FormGroup({
@@ -132,7 +139,7 @@ export class DashboardComponent {
     );
   }
 
-  private getGames() {
+  public getGames() {
     this._dashboard.getAllGames().subscribe(
       (data:any) => {
         this.games = data;
@@ -189,6 +196,24 @@ export class DashboardComponent {
       (data:any) => {
         this.getGames();
         this._toastr.success('Se ha actualizado correctamente el resultado del partido!', 'Bien!');
+      },
+      (error:any) => {
+        this._toastr.error(error, 'Algo no ha ido correctamente.');
+      }
+    );
+  }
+
+  public updateGameInfo(game: GamesResponse){
+    this.alterGameInfoObj.gameId = game.id;
+    this.alterGameInfoObj.newCourt = game.court;
+    this.alterGameInfoObj.newSchedule = game.schedule;
+
+    console.log(this.alterGameInfoObj);
+
+    this._dashboard.alterGameInfo(this.alterGameInfoObj).subscribe(
+      (data:any) => {
+        this.getGames();
+        this._toastr.success('Se ha actualizado correctamente la información del partido!', 'Bien!');
       },
       (error:any) => {
         this._toastr.error(error, 'Algo no ha ido correctamente.');
@@ -312,9 +337,5 @@ export class DashboardComponent {
         this._toastr.error(error, 'Algo no ha ido correctamente.');
       }
     )
-  }
-
-  public cleanGamesFilter(){
-    this.getGames();
   }
 }
